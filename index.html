@@ -39,6 +39,7 @@
             justify-content: center;
             gap: 10px;
             margin-top: 20px;
+            align-items: flex-start;
         }
         .image-grid img {
             max-width: 150px;
@@ -136,17 +137,16 @@
                 const img = new Image();
                 img.src = `assets/images/${category}/${category}-${i}.webp`;
                 img.alt = `${category} ${i}`;
-                img.onerror = function() {
-                    if (i > 5 && !grid.querySelector('img')) {
-                        grid.innerHTML = '<p>No images in this category.</p>';
-                    }
-                    return;
-                };
                 img.onload = function() {
                     img.onclick = function() { openLightbox(this.src); };
                     img.style.maxWidth = '150px';
                     img.style.height = 'auto';
                     grid.appendChild(img);
+                };
+                img.onerror = function() {
+                    if (i > 5 && !grid.querySelector('img')) {
+                        grid.innerHTML = '<p>No images in this category.</p>';
+                    }
                 };
             }
         }
