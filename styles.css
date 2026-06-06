@@ -1,0 +1,10 @@
+body {
+    font-family: Arial, sans-serif;  /* Schriftart für den gesamten Text */
+    background-color: #f4f4f4;     /* Hellgrauer Hintergrund */
+    margin: 20px;                  /* Abstand zum Rand */
+}
+
+h1 {
+    color: #2c3e50;               /* Dunkle Überschriftfarbe */
+    text-align: center;           /* Zentrierte Überschrift */
+}
