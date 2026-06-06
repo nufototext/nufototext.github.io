@@ -58,6 +58,7 @@
             z-index: 1000;
             justify-content: center;
             align-items: center;
+            touch-action: pan-y;
         }
         #lightbox img {
             max-width: 90%;
@@ -80,6 +81,27 @@
             justify-content: center;
             align-items: center;
             color: #999;
+        }
+        #lightbox-nav {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            pointer-events: none;
+        }
+        #lightbox-prev, #lightbox-next {
+            pointer-events: all;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+            padding: 0 20px;
+            user-select: none;
+        }
+        #lightbox-prev { margin-left: 10px; }
+        #lightbox-next { margin-right: 10px; }
+        #lightbox-prev:hover, #lightbox-next:hover {
+            opacity: 0.8;
         }
     </style>
 </head>
@@ -119,10 +141,19 @@
     <!-- Lightbox -->
     <div id="lightbox" onclick="closeLightbox()">
         <span id="lightbox-close" onclick="closeLightbox()">&times;</span>
+        <span id="lightbox-nav">
+            <span id="lightbox-prev" onclick="event.stopPropagation(); navigateLightbox(-1);">&#10094;</span>
+            <span id="lightbox-next" onclick="event.stopPropagation(); navigateLightbox(1);">&#10095;</span>
+        </span>
         <img id="lightbox-img" src="" alt="">
     </div>
 
     <script>
+        // Aktuelle Kategorie und Bildindex für Navigation
+        let currentCategory = '';
+        let currentImageIndex = 0;
+        let currentImages = [];
+
         // Funktion zum Anzeigen der Bilder einer Kategorie
         function showImages(category) {
             document.querySelectorAll('.image-grid').forEach(function(grid) {
@@ -133,12 +164,19 @@
             grid.style.display = 'flex';
             grid.innerHTML = '';
 
+            // Bilder für diese Kategorie laden
+            const images = [];
             for (let i = 1; i <= 100; i++) {
+                const imgUrl = `assets/images/${category}/${category}-${i}.webp`;
                 const img = new Image();
-                img.src = `assets/images/${category}/${category}-${i}.webp`;
+                img.src = imgUrl;
                 img.alt = `${category} ${i}`;
                 img.onload = function() {
-                    img.onclick = function() { openLightbox(this.src); };
+                    img.onclick = function() {
+                        // Finde den Index des aktuellen Bildes
+                        const index = images.indexOf(imgUrl);
+                        openLightbox(imgUrl, category, index, images);
+                    };
                     img.style.maxWidth = '150px';
                     img.style.height = 'auto';
                     grid.appendChild(img);
@@ -148,17 +186,81 @@
                         grid.innerHTML = '<p>No images in this category.</p>';
                     }
                 };
+                images.push(imgUrl);
             }
         }
 
         // Lightbox-Funktionen
-        function openLightbox(src) {
+        function openLightbox(src, category, index, images) {
+            currentCategory = category;
+            currentImageIndex = index;
+            currentImages = images;
+            
             document.getElementById('lightbox-img').src = src;
             document.getElementById('lightbox').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
         }
 
         function closeLightbox() {
             document.getElementById('lightbox').style.display = 'none';
+            document.body.style.overflow = '';
+        }
+
+        // Navigation in der Lightbox
+        function navigateLightbox(direction) {
+            currentImageIndex += direction;
+            
+            // Begrenze den Index
+            if (currentImageIndex < 0) {
+                currentImageIndex = currentImages.length - 1;
+            } else if (currentImageIndex >= currentImages.length) {
+                currentImageIndex = 0;
+            }
+            
+            if (currentImages[currentImageIndex]) {
+                document.getElementById('lightbox-img').src = currentImages[currentImageIndex];
+            }
+        }
+
+        // Tastatursteuerung
+        document.addEventListener('keydown', function(e) {
+            if (document.getElementById('lightbox').style.display === 'flex') {
+                if (e.key === 'Escape') {
+                    closeLightbox();
+                } else if (e.key === 'ArrowLeft') {
+                    navigateLightbox(-1);
+                } else if (e.key === 'ArrowRight') {
+                    navigateLightbox(1);
+                }
+            }
+        });
+
+        // Touch-Navigation für Smartphones
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.getElementById('lightbox').addEventListener('touchstart', function(e) {
+            touchStartX = e.changedTouches[0].screenX;
+        }, false);
+
+        document.getElementById('lightbox').addEventListener('touchend', function(e) {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, false);
+
+        function handleSwipe() {
+            const swipeThreshold = 50; // Mindestdistanz für Wischen
+            const diff = touchStartX - touchEndX;
+            
+            if (Math.abs(diff) > swipeThreshold) {
+                if (diff > 0) {
+                    // Wischen nach links -> nächstes Bild
+                    navigateLightbox(1);
+                } else {
+                    // Wischen nach rechts -> vorheriges Bild
+                    navigateLightbox(-1);
+                }
+            }
         }
     </script>
 </body>
