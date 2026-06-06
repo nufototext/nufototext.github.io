@@ -3,112 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>nufototext</title>
-    <link rel="stylesheet" href="styles.css">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 20px;
-        }
-        h1 {
-            margin-bottom: 30px;
-        }
-        .gallery {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
-            margin-top: 20px;
-        }
-        .category {
-            cursor: pointer;
-            margin: 10px;
-        }
-        .category img {
-            max-width: 200px;
-            height: auto;
-            border: 1px solid #ddd;
-        }
-        .category p {
-            margin-top: 5px;
-            font-weight: bold;
-        }
-        .image-grid {
-            display: none;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 20px;
-            align-items: flex-start;
-        }
-        .image-grid img {
-            max-width: 150px;
-            height: auto;
-            border: 1px solid #ddd;
-            cursor: pointer;
-        }
-        #lightbox {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-        }
-        #lightbox img {
-            max-width: 90%;
-            max-height: 90%;
-            object-fit: contain;
-        }
-        #lightbox-close {
-            position: absolute;
-            top: 20px;
-            right: 30px;
-            color: white;
-            font-size: 30px;
-            cursor: pointer;
-        }
-        .category-placeholder {
-            width: 200px;
-            height: 150px;
-            background-color: #f0f0f0;
-            border: 1px solid #ddd;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #999;
-        }
-    </style>
+    
+    <!-- SEO Meta-Tags -->
+    <meta name="description" content="Fotogalerie von nufototext – Entdecke unsere Sammlung von Stadtlandschaften, Naturaufnahmen, Bühnenbildern und Porträts.">
+    <meta name="keywords" content="Fotografie, Stadtlandschaft, Natur, Bühne, Menschen, Galerie, nufototext">
+    <meta name="author" content="nufototext">
+    
+    <!-- Open Graph / Social Media -->
+    <meta property="og:title" content="nufototext – Fotogalerie">
+    <meta property="og:description" content="Entdecke unsere Fotogalerie mit Kategorien wie Stadtlandschaften, Natur, Bühnen und Menschen.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://nufototext.github.io">
+    <meta property="og:image" content="https://nufototext.github.io/assets/images/cityscape/cityscape-1.webp">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="nufototext – Fotogalerie">
+    <meta name="twitter:description" content="Entdecke unsere Fotogalerie mit Kategorien wie Stadtlandschaften, Natur, Bühnen und Menschen.">
+    <meta name="twitter:image" content="https://nufototext.github.io/assets/images/cityscape/cityscape-1.webp">
+    
+    <!-- Favicon (optional, kann später hinzugefügt werden) -->
+    <link rel="icon" type="image/webp" href="assets/images/favicon.webp">
+    
+    <title>nufototext – Fotogalerie</title>
+    
+    <!-- Externe Stylesheets -->
+    <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
-    <h1>nufototext - welcome!</h1>
+    <h1>nufototext – Fotogalerie</h1>
 
     <!-- Kategorien mit dynamischen Hauptbildern -->
     <div class="gallery">
         <div class="category" onclick="showImages('cityscape')">
-            <img src="cityscape-1.jpg" alt="Cityscape" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <img src="" alt="Stadtlandschaft" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
             <div class="category-placeholder" style="display: none;">Kein Bild</div>
-            <p>cityscape</p>
+            <p>Stadtlandschaften</p>
         </div>
         <div class="category" onclick="showImages('nature')">
-            <img src="nature-1.jpg" alt="Nature" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <img src="" alt="Natur" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
             <div class="category-placeholder" style="display: none;">Kein Bild</div>
-            <p>nature</p>
+            <p>Natur</p>
         </div>
         <div class="category" onclick="showImages('stage')">
-            <img src="stage-1.jpg" alt="Stage" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <img src="" alt="Bühne" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
             <div class="category-placeholder" style="display: none;">Kein Bild</div>
-            <p>stage</p>
+            <p>Bühne</p>
         </div>
         <div class="category" onclick="showImages('people')">
-            <img src="people-1.jpg" alt="People" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <img src="" alt="Menschen" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
             <div class="category-placeholder" style="display: none;">Kein Bild</div>
-            <p>people</p>
+            <p>Menschen</p>
         </div>
     </div>
 
@@ -119,50 +64,12 @@
     <div id="people-images" class="image-grid"></div>
 
     <!-- Lightbox -->
-    <div id="lightbox" onclick="closeLightbox()">
-        <span id="lightbox-close" onclick="closeLightbox()">&times;</span>
+    <div id="lightbox">
+        <span id="lightbox-close">&times;</span>
         <img id="lightbox-img" src="" alt="Vergrößertes Bild">
     </div>
 
-    <script>
-        // Funktion zum Anzeigen der Bilder einer Kategorie
-        function showImages(category) {
-            document.querySelectorAll('.image-grid').forEach(function(grid) {
-                grid.style.display = 'none';
-            });
-
-            const grid = document.getElementById(category + '-images');
-            grid.style.display = 'flex';
-            grid.innerHTML = '';
-
-            for (let i = 1; i <= 100; i++) {
-                const img = new Image();
-                img.src = `${category}-${i}.jpg`;
-                img.alt = `${category} ${i}`;
-                img.onerror = function() {
-                    if (i > 5 && !grid.querySelector('img')) {
-                        grid.innerHTML = '<p>Keine Bilder in dieser Kategorie.</p>';
-                    }
-                    return;
-                };
-                img.onload = function() {
-                    img.onclick = function() { openLightbox(this.src); };
-                    img.style.maxWidth = '150px';
-                    img.style.height = 'auto';
-                    grid.appendChild(img);
-                };
-            }
-        }
-
-        // Lightbox-Funktionen
-        function openLightbox(src) {
-            document.getElementById('lightbox-img').src = src;
-            document.getElementById('lightbox').style.display = 'flex';
-        }
-
-        function closeLightbox() {
-            document.getElementById('lightbox').style.display = 'none';
-        }
-    </script>
+    <!-- Externes JavaScript -->
+    <script src="assets/js/script.js"></script>
 </body>
 </html>
