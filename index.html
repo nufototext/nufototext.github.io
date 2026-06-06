@@ -40,12 +40,13 @@
             justify-content: center;
             gap: 10px;
             margin-top: 20px;
+            align-items: flex-start; /* Verhindert, dass Bilder gestreckt werden */
         }
         .image-grid img {
             max-width: 150px;
             height: auto; /* Behält das ursprüngliche Seitenverhältnis bei */
             border: 1px solid #ddd;
-            cursor: pointer; /* Zeigt an, dass das Bild klickbar ist */
+            cursor: pointer;
         }
 
         /* Lightbox-Stil */
@@ -82,75 +83,28 @@
     <!-- Kategorien mit Aufhängerbildern -->
     <div class="gallery">
         <div class="category" onclick="showImages('cityscape')">
-            <img src="cityscape-1.jpg" alt="Cityscape" onclick="event.stopPropagation(); openLightbox(this.src);">
+            <img src="cityscape-1.jpg" alt="Cityscape">
             <p>cityscape</p>
         </div>
         <div class="category" onclick="showImages('nature')">
-            <img src="nature-1.jpg" alt="Nature" onclick="event.stopPropagation(); openLightbox(this.src);">
+            <img src="nature-1.jpg" alt="Nature">
             <p>nature</p>
         </div>
         <div class="category" onclick="showImages('stage')">
-            <img src="stage-1.jpg" alt="Stage" onclick="event.stopPropagation(); openLightbox(this.src);">
+            <img src="stage-1.jpg" alt="Stage">
             <p>stage</p>
         </div>
         <div class="category" onclick="showImages('people')">
-            <img src="people-1.jpg" alt="People" onclick="event.stopPropagation(); openLightbox(this.src);">
+            <img src="people-1.jpg" alt="People">
             <p>people</p>
         </div>
     </div>
 
-    <!-- Bildgalerien (unsichtbar, bis geklickt wird) -->
-    <div id="cityscape-images" class="image-grid">
-        <img src="cityscape-1.jpg" alt="Cityscape 1" onclick="openLightbox(this.src)">
-        <img src="cityscape-2.jpg" alt="Cityscape 2" onclick="openLightbox(this.src)">
-        <img src="cityscape-3.jpg" alt="Cityscape 3" onclick="openLightbox(this.src)">
-        <img src="cityscape-4.jpg" alt="Cityscape 4" onclick="openLightbox(this.src)">
-        <img src="cityscape-5.jpg" alt="Cityscape 5" onclick="openLightbox(this.src)">
-        <img src="cityscape-6.jpg" alt="Cityscape 6" onclick="openLightbox(this.src)">
-        <img src="cityscape-7.jpg" alt="Cityscape 7" onclick="openLightbox(this.src)">
-        <img src="cityscape-8.jpg" alt="Cityscape 8" onclick="openLightbox(this.src)">
-        <img src="cityscape-9.jpg" alt="Cityscape 9" onclick="openLightbox(this.src)">
-        <img src="cityscape-10.jpg" alt="Cityscape 10" onclick="openLightbox(this.src)">
-    </div>
-
-    <div id="nature-images" class="image-grid">
-        <img src="nature-1.jpg" alt="Nature 1" onclick="openLightbox(this.src)">
-        <img src="nature-2.jpg" alt="Nature 2" onclick="openLightbox(this.src)">
-        <img src="nature-3.jpg" alt="Nature 3" onclick="openLightbox(this.src)">
-        <img src="nature-4.jpg" alt="Nature 4" onclick="openLightbox(this.src)">
-        <img src="nature-5.jpg" alt="Nature 5" onclick="openLightbox(this.src)">
-        <img src="nature-6.jpg" alt="Nature 6" onclick="openLightbox(this.src)">
-        <img src="nature-7.jpg" alt="Nature 7" onclick="openLightbox(this.src)">
-        <img src="nature-8.jpg" alt="Nature 8" onclick="openLightbox(this.src)">
-        <img src="nature-9.jpg" alt="Nature 9" onclick="openLightbox(this.src)">
-        <img src="nature-10.jpg" alt="Nature 10" onclick="openLightbox(this.src)">
-    </div>
-
-    <div id="stage-images" class="image-grid">
-        <img src="stage-1.jpg" alt="Stage 1" onclick="openLightbox(this.src)">
-        <img src="stage-2.jpg" alt="Stage 2" onclick="openLightbox(this.src)">
-        <img src="stage-3.jpg" alt="Stage 3" onclick="openLightbox(this.src)">
-        <img src="stage-4.jpg" alt="Stage 4" onclick="openLightbox(this.src)">
-        <img src="stage-5.jpg" alt="Stage 5" onclick="openLightbox(this.src)">
-        <img src="stage-6.jpg" alt="Stage 6" onclick="openLightbox(this.src)">
-        <img src="stage-7.jpg" alt="Stage 7" onclick="openLightbox(this.src)">
-        <img src="stage-8.jpg" alt="Stage 8" onclick="openLightbox(this.src)">
-        <img src="stage-9.jpg" alt="Stage 9" onclick="openLightbox(this.src)">
-        <img src="stage-10.jpg" alt="Stage 10" onclick="openLightbox(this.src)">
-    </div>
-
-    <div id="people-images" class="image-grid">
-        <img src="people-1.jpg" alt="People 1" onclick="openLightbox(this.src)">
-        <img src="people-2.jpg" alt="People 2" onclick="openLightbox(this.src)">
-        <img src="people-3.jpg" alt="People 3" onclick="openLightbox(this.src)">
-        <img src="people-4.jpg" alt="People 4" onclick="openLightbox(this.src)">
-        <img src="people-5.jpg" alt="People 5" onclick="openLightbox(this.src)">
-        <img src="people-6.jpg" alt="People 6" onclick="openLightbox(this.src)">
-        <img src="people-7.jpg" alt="People 7" onclick="openLightbox(this.src)">
-        <img src="people-8.jpg" alt="People 8" onclick="openLightbox(this.src)">
-        <img src="people-9.jpg" alt="People 9" onclick="openLightbox(this.src)">
-        <img src="people-10.jpg" alt="People 10" onclick="openLightbox(this.src)">
-    </div>
+    <!-- Leere Container für die Bildgalerien (werden dynamisch gefüllt) -->
+    <div id="cityscape-images" class="image-grid"></div>
+    <div id="nature-images" class="image-grid"></div>
+    <div id="stage-images" class="image-grid"></div>
+    <div id="people-images" class="image-grid"></div>
 
     <!-- Lightbox für große Bilder -->
     <div id="lightbox" onclick="closeLightbox()">
@@ -161,10 +115,35 @@
     <script>
         // Funktion zum Anzeigen der Bilder einer Kategorie
         function showImages(category) {
+            // Alle Bildgalerien ausblenden
             document.querySelectorAll('.image-grid').forEach(function(grid) {
                 grid.style.display = 'none';
             });
-            document.getElementById(category + '-images').style.display = 'flex';
+
+            // Die gewählte Galerie anzeigen und dynamisch füllen
+            const grid = document.getElementById(category + '-images');
+            grid.style.display = 'flex';
+            grid.innerHTML = ''; // Leeren, falls bereits Bilder geladen wurden
+
+            // Bilder dynamisch laden (ab 1 bis maximal 100)
+            for (let i = 1; i <= 100; i++) {
+                const img = new Image();
+                img.src = `${category}-${i}.jpg`;
+                img.alt = `${category} ${i}`;
+                img.onerror = function() {
+                    // Bild existiert nicht – Abbruch nach 5 aufeinanderfolgenden Fehlern
+                    if (i > 5 && !grid.querySelector('img')) {
+                        grid.innerHTML = '<p>Keine Bilder in dieser Kategorie.</p>';
+                    }
+                    return;
+                };
+                img.onload = function() {
+                    img.onclick = function() { openLightbox(this.src); };
+                    img.style.maxWidth = '150px';
+                    img.style.height = 'auto';
+                    grid.appendChild(img);
+                };
+            }
         }
 
         // Lightbox-Funktionen
