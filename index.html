@@ -6,7 +6,6 @@
     <title>nufototext</title>
     <link rel="stylesheet" href="styles.css">
     <style>
-        /* Einfaches Grundlayout für die Kategorien */
         body {
             font-family: Arial, sans-serif;
             text-align: center;
@@ -27,9 +26,8 @@
             margin: 10px;
         }
         .category img {
-            width: 200px;
-            height: 150px;
-            object-fit: cover;
+            max-width: 200px;
+            height: auto; /* Behält das ursprüngliche Seitenverhältnis bei */
             border: 1px solid #ddd;
         }
         .category p {
@@ -37,17 +35,44 @@
             font-weight: bold;
         }
         .image-grid {
-            display: none; /* Standardmäßig ausgeblendet */
+            display: none;
             flex-wrap: wrap;
             justify-content: center;
             gap: 10px;
             margin-top: 20px;
         }
         .image-grid img {
-            width: 150px;
-            height: 150px;
-            object-fit: cover;
+            max-width: 150px;
+            height: auto; /* Behält das ursprüngliche Seitenverhältnis bei */
             border: 1px solid #ddd;
+            cursor: pointer; /* Zeigt an, dass das Bild klickbar ist */
+        }
+
+        /* Lightbox-Stil */
+        #lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        #lightbox img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+        }
+        #lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -56,94 +81,100 @@
 
     <!-- Kategorien mit Aufhängerbildern -->
     <div class="gallery">
-        <!-- Cityscape -->
         <div class="category" onclick="showImages('cityscape')">
-            <img src="cityscape-1.jpg" alt="Cityscape">
+            <img src="cityscape-1.jpg" alt="Cityscape" onclick="event.stopPropagation(); openLightbox(this.src);">
             <p>cityscape</p>
         </div>
-
-        <!-- Nature -->
         <div class="category" onclick="showImages('nature')">
-            <img src="nature-1.jpg" alt="Nature">
+            <img src="nature-1.jpg" alt="Nature" onclick="event.stopPropagation(); openLightbox(this.src);">
             <p>nature</p>
         </div>
-
-        <!-- Stage -->
         <div class="category" onclick="showImages('stage')">
-            <img src="stage-1.jpg" alt="Stage">
+            <img src="stage-1.jpg" alt="Stage" onclick="event.stopPropagation(); openLightbox(this.src);">
             <p>stage</p>
         </div>
-
-        <!-- People -->
         <div class="category" onclick="showImages('people')">
-            <img src="people-1.jpg" alt="People">
+            <img src="people-1.jpg" alt="People" onclick="event.stopPropagation(); openLightbox(this.src);">
             <p>people</p>
         </div>
     </div>
 
-    <!-- Platzhalter für die Bildgalerien (unsichtbar, bis geklickt wird) -->
+    <!-- Bildgalerien (unsichtbar, bis geklickt wird) -->
     <div id="cityscape-images" class="image-grid">
-        <img src="cityscape-1.jpg" alt="Cityscape 1">
-        <img src="cityscape-2.jpg" alt="Cityscape 2">
-        <img src="cityscape-3.jpg" alt="Cityscape 3">
-        <img src="cityscape-4.jpg" alt="Cityscape 4">
-        <img src="cityscape-5.jpg" alt="Cityscape 5">
-        <img src="cityscape-6.jpg" alt="Cityscape 6">
-        <img src="cityscape-7.jpg" alt="Cityscape 7">
-        <img src="cityscape-8.jpg" alt="Cityscape 8">
-        <img src="cityscape-9.jpg" alt="Cityscape 9">
-        <img src="cityscape-10.jpg" alt="Cityscape 10">
+        <img src="cityscape-1.jpg" alt="Cityscape 1" onclick="openLightbox(this.src)">
+        <img src="cityscape-2.jpg" alt="Cityscape 2" onclick="openLightbox(this.src)">
+        <img src="cityscape-3.jpg" alt="Cityscape 3" onclick="openLightbox(this.src)">
+        <img src="cityscape-4.jpg" alt="Cityscape 4" onclick="openLightbox(this.src)">
+        <img src="cityscape-5.jpg" alt="Cityscape 5" onclick="openLightbox(this.src)">
+        <img src="cityscape-6.jpg" alt="Cityscape 6" onclick="openLightbox(this.src)">
+        <img src="cityscape-7.jpg" alt="Cityscape 7" onclick="openLightbox(this.src)">
+        <img src="cityscape-8.jpg" alt="Cityscape 8" onclick="openLightbox(this.src)">
+        <img src="cityscape-9.jpg" alt="Cityscape 9" onclick="openLightbox(this.src)">
+        <img src="cityscape-10.jpg" alt="Cityscape 10" onclick="openLightbox(this.src)">
     </div>
 
     <div id="nature-images" class="image-grid">
-        <img src="nature-1.jpg" alt="Nature 1">
-        <img src="nature-2.jpg" alt="Nature 2">
-        <img src="nature-3.jpg" alt="Nature 3">
-        <img src="nature-4.jpg" alt="Nature 4">
-        <img src="nature-5.jpg" alt="Nature 5">
-        <img src="nature-6.jpg" alt="Nature 6">
-        <img src="nature-7.jpg" alt="Nature 7">
-        <img src="nature-8.jpg" alt="Nature 8">
-        <img src="nature-9.jpg" alt="Nature 9">
-        <img src="nature-10.jpg" alt="Nature 10">
+        <img src="nature-1.jpg" alt="Nature 1" onclick="openLightbox(this.src)">
+        <img src="nature-2.jpg" alt="Nature 2" onclick="openLightbox(this.src)">
+        <img src="nature-3.jpg" alt="Nature 3" onclick="openLightbox(this.src)">
+        <img src="nature-4.jpg" alt="Nature 4" onclick="openLightbox(this.src)">
+        <img src="nature-5.jpg" alt="Nature 5" onclick="openLightbox(this.src)">
+        <img src="nature-6.jpg" alt="Nature 6" onclick="openLightbox(this.src)">
+        <img src="nature-7.jpg" alt="Nature 7" onclick="openLightbox(this.src)">
+        <img src="nature-8.jpg" alt="Nature 8" onclick="openLightbox(this.src)">
+        <img src="nature-9.jpg" alt="Nature 9" onclick="openLightbox(this.src)">
+        <img src="nature-10.jpg" alt="Nature 10" onclick="openLightbox(this.src)">
     </div>
 
     <div id="stage-images" class="image-grid">
-        <img src="stage-1.jpg" alt="Stage 1">
-        <img src="stage-2.jpg" alt="Stage 2">
-        <img src="stage-3.jpg" alt="Stage 3">
-        <img src="stage-4.jpg" alt="Stage 4">
-        <img src="stage-5.jpg" alt="Stage 5">
-        <img src="stage-6.jpg" alt="Stage 6">
-        <img src="stage-7.jpg" alt="Stage 7">
-        <img src="stage-8.jpg" alt="Stage 8">
-        <img src="stage-9.jpg" alt="Stage 9">
-        <img src="stage-10.jpg" alt="Stage 10">
+        <img src="stage-1.jpg" alt="Stage 1" onclick="openLightbox(this.src)">
+        <img src="stage-2.jpg" alt="Stage 2" onclick="openLightbox(this.src)">
+        <img src="stage-3.jpg" alt="Stage 3" onclick="openLightbox(this.src)">
+        <img src="stage-4.jpg" alt="Stage 4" onclick="openLightbox(this.src)">
+        <img src="stage-5.jpg" alt="Stage 5" onclick="openLightbox(this.src)">
+        <img src="stage-6.jpg" alt="Stage 6" onclick="openLightbox(this.src)">
+        <img src="stage-7.jpg" alt="Stage 7" onclick="openLightbox(this.src)">
+        <img src="stage-8.jpg" alt="Stage 8" onclick="openLightbox(this.src)">
+        <img src="stage-9.jpg" alt="Stage 9" onclick="openLightbox(this.src)">
+        <img src="stage-10.jpg" alt="Stage 10" onclick="openLightbox(this.src)">
     </div>
 
     <div id="people-images" class="image-grid">
-        <img src="people-1.jpg" alt="People 1">
-        <img src="people-2.jpg" alt="People 2">
-        <img src="people-3.jpg" alt="People 3">
-        <img src="people-4.jpg" alt="People 4">
-        <img src="people-5.jpg" alt="People 5">
-        <img src="people-6.jpg" alt="People 6">
-        <img src="people-7.jpg" alt="People 7">
-        <img src="people-8.jpg" alt="People 8">
-        <img src="people-9.jpg" alt="People 9">
-        <img src="people-10.jpg" alt="People 10">
+        <img src="people-1.jpg" alt="People 1" onclick="openLightbox(this.src)">
+        <img src="people-2.jpg" alt="People 2" onclick="openLightbox(this.src)">
+        <img src="people-3.jpg" alt="People 3" onclick="openLightbox(this.src)">
+        <img src="people-4.jpg" alt="People 4" onclick="openLightbox(this.src)">
+        <img src="people-5.jpg" alt="People 5" onclick="openLightbox(this.src)">
+        <img src="people-6.jpg" alt="People 6" onclick="openLightbox(this.src)">
+        <img src="people-7.jpg" alt="People 7" onclick="openLightbox(this.src)">
+        <img src="people-8.jpg" alt="People 8" onclick="openLightbox(this.src)">
+        <img src="people-9.jpg" alt="People 9" onclick="openLightbox(this.src)">
+        <img src="people-10.jpg" alt="People 10" onclick="openLightbox(this.src)">
+    </div>
+
+    <!-- Lightbox für große Bilder -->
+    <div id="lightbox" onclick="closeLightbox()">
+        <span id="lightbox-close" onclick="closeLightbox()">&times;</span>
+        <img id="lightbox-img" src="" alt="Vergrößertes Bild">
     </div>
 
     <script>
         // Funktion zum Anzeigen der Bilder einer Kategorie
         function showImages(category) {
-            // Alle Bildgalerien ausblenden
             document.querySelectorAll('.image-grid').forEach(function(grid) {
                 grid.style.display = 'none';
             });
-
-            // Die gewählte Galerie anzeigen
             document.getElementById(category + '-images').style.display = 'flex';
+        }
+
+        // Lightbox-Funktionen
+        function openLightbox(src) {
+            document.getElementById('lightbox-img').src = src;
+            document.getElementById('lightbox').style.display = 'flex';
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').style.display = 'none';
         }
     </script>
 </body>
