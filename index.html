@@ -27,7 +27,7 @@
         }
         .category img {
             max-width: 200px;
-            height: auto; /* Behält das ursprüngliche Seitenverhältnis bei */
+            height: auto;
             border: 1px solid #ddd;
         }
         .category p {
@@ -40,16 +40,14 @@
             justify-content: center;
             gap: 10px;
             margin-top: 20px;
-            align-items: flex-start; /* Verhindert, dass Bilder gestreckt werden */
+            align-items: flex-start;
         }
         .image-grid img {
             max-width: 150px;
-            height: auto; /* Behält das ursprüngliche Seitenverhältnis bei */
+            height: auto;
             border: 1px solid #ddd;
             cursor: pointer;
         }
-
-        /* Lightbox-Stil */
         #lightbox {
             display: none;
             position: fixed;
@@ -75,38 +73,52 @@
             font-size: 30px;
             cursor: pointer;
         }
+        .category-placeholder {
+            width: 200px;
+            height: 150px;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #999;
+        }
     </style>
 </head>
 <body>
     <h1>nufototext - welcome!</h1>
 
-    <!-- Kategorien mit Aufhängerbildern -->
+    <!-- Kategorien mit dynamischen Hauptbildern -->
     <div class="gallery">
         <div class="category" onclick="showImages('cityscape')">
-            <img src="cityscape-1.jpg" alt="Cityscape">
+            <img src="cityscape-1.jpg" alt="Cityscape" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="category-placeholder" style="display: none;">Kein Bild</div>
             <p>cityscape</p>
         </div>
         <div class="category" onclick="showImages('nature')">
-            <img src="nature-1.jpg" alt="Nature">
+            <img src="nature-1.jpg" alt="Nature" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="category-placeholder" style="display: none;">Kein Bild</div>
             <p>nature</p>
         </div>
         <div class="category" onclick="showImages('stage')">
-            <img src="stage-1.jpg" alt="Stage">
+            <img src="stage-1.jpg" alt="Stage" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="category-placeholder" style="display: none;">Kein Bild</div>
             <p>stage</p>
         </div>
         <div class="category" onclick="showImages('people')">
-            <img src="people-1.jpg" alt="People">
+            <img src="people-1.jpg" alt="People" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="category-placeholder" style="display: none;">Kein Bild</div>
             <p>people</p>
         </div>
     </div>
 
-    <!-- Leere Container für die Bildgalerien (werden dynamisch gefüllt) -->
+    <!-- Leere Container für die Bildgalerien -->
     <div id="cityscape-images" class="image-grid"></div>
     <div id="nature-images" class="image-grid"></div>
     <div id="stage-images" class="image-grid"></div>
     <div id="people-images" class="image-grid"></div>
 
-    <!-- Lightbox für große Bilder -->
+    <!-- Lightbox -->
     <div id="lightbox" onclick="closeLightbox()">
         <span id="lightbox-close" onclick="closeLightbox()">&times;</span>
         <img id="lightbox-img" src="" alt="Vergrößertes Bild">
@@ -115,23 +127,19 @@
     <script>
         // Funktion zum Anzeigen der Bilder einer Kategorie
         function showImages(category) {
-            // Alle Bildgalerien ausblenden
             document.querySelectorAll('.image-grid').forEach(function(grid) {
                 grid.style.display = 'none';
             });
 
-            // Die gewählte Galerie anzeigen und dynamisch füllen
             const grid = document.getElementById(category + '-images');
             grid.style.display = 'flex';
-            grid.innerHTML = ''; // Leeren, falls bereits Bilder geladen wurden
+            grid.innerHTML = '';
 
-            // Bilder dynamisch laden (ab 1 bis maximal 100)
             for (let i = 1; i <= 100; i++) {
                 const img = new Image();
                 img.src = `${category}-${i}.jpg`;
                 img.alt = `${category} ${i}`;
                 img.onerror = function() {
-                    // Bild existiert nicht – Abbruch nach 5 aufeinanderfolgenden Fehlern
                     if (i > 5 && !grid.querySelector('img')) {
                         grid.innerHTML = '<p>Keine Bilder in dieser Kategorie.</p>';
                     }
