@@ -55,6 +55,7 @@
             gap: 10px;
             margin-top: 20px;
             align-items: flex-start;
+            padding: 15px;
         }
         .image-grid img {
             max-width: 150px;
@@ -118,13 +119,43 @@
         #lightbox-prev:hover, #lightbox-next:hover {
             opacity: 0.8;
         }
+        /* Zurück-Button */
+        .back-button {
+            display: none;
+            margin: 20px 0;
+            padding: 10px 20px;
+            background-color: #444;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .back-button:hover {
+            background-color: #555;
+        }
+        /* Rahmen für die Voransichtsreihe in Kategorie-Farbe */
+        #cityscape-images {
+            border: 2px solid #cccccc;
+        }
+        #nature-images {
+            border: 2px solid #77ff77;
+        }
+        #stage-images {
+            border: 2px solid #ffff77;
+        }
+        #people-images {
+            border: 2px solid #ff9944;
+        }
     </style>
 </head>
 <body>
     <h1>nufototext - welcome!</h1>
 
+    <button class="back-button" id="back-button" onclick="showMainGallery()">← Zurück zur Übersicht</button>
+
     <!-- Kategorien mit dynamischen Hauptbildern -->
-    <div class="gallery">
+    <div class="gallery" id="main-gallery">
         <div class="category" onclick="showImages('cityscape')">
             <img src="assets/images/cityscape/cityscape-1.webp" alt="cityscape" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
             <div class="category-placeholder" style="display: none;">No image</div>
@@ -171,9 +202,16 @@
 
         // Funktion zum Anzeigen der Bilder einer Kategorie
         function showImages(category) {
+            // Hauptgalerie ausblenden
+            document.getElementById('main-gallery').style.display = 'none';
+            
+            // Alle Bildgalerien ausblenden
             document.querySelectorAll('.image-grid').forEach(function(grid) {
                 grid.style.display = 'none';
             });
+
+            // Zurück-Button anzeigen
+            document.getElementById('back-button').style.display = 'inline-block';
 
             const grid = document.getElementById(category + '-images');
             grid.style.display = 'flex';
@@ -203,6 +241,16 @@
                 };
                 images.push(imgUrl);
             }
+        }
+
+        // Funktion zum Zurücksetzen zur Hauptansicht
+        function showMainGallery() {
+            document.getElementById('main-gallery').style.display = 'flex';
+            document.querySelectorAll('.image-grid').forEach(function(grid) {
+                grid.style.display = 'none';
+            });
+            // Zurück-Button ausblenden
+            document.getElementById('back-button').style.display = 'none';
         }
 
         // Lightbox-Funktionen
