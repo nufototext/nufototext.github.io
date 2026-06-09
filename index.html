@@ -147,6 +147,14 @@
         #people-images {
             border: 2px solid #ff9944;
         }
+        /* Untere Zurück-Button - fixiert am unteren Rand */
+        #back-button-bottom {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+        }
     </style>
 </head>
 <body>
@@ -184,6 +192,9 @@
     <div id="stage-images" class="image-grid"></div>
     <div id="people-images" class="image-grid"></div>
 
+    <!-- Zweite "back to overview"-Schaltfläche unten -->
+    <button class="back-button" id="back-button-bottom" onclick="showMainGallery()" style="display: none;">← back to overview</button>
+
     <!-- Lightbox -->
     <div id="lightbox" onclick="closeLightbox()">
         <span id="lightbox-close" onclick="closeLightbox()">&times;</span>
@@ -210,8 +221,9 @@
                 grid.style.display = 'none';
             });
 
-            // Zurück-Button anzeigen
+            // Zurück-Button anzeigen (oben und unten)
             document.getElementById('back-button').style.display = 'inline-block';
+            document.getElementById('back-button-bottom').style.display = 'inline-block';
 
             const grid = document.getElementById(category + '-images');
             grid.style.display = 'flex';
@@ -256,8 +268,9 @@
             document.querySelectorAll('.image-grid').forEach(function(grid) {
                 grid.style.display = 'none';
             });
-            // Zurück-Button ausblenden
+            // Zurück-Buttons ausblenden (oben und unten)
             document.getElementById('back-button').style.display = 'none';
+            document.getElementById('back-button-bottom').style.display = 'none';
         }
 
         // Lightbox-Funktionen
