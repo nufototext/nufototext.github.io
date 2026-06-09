@@ -157,22 +157,22 @@
     <!-- Kategorien mit dynamischen Hauptbildern -->
     <div class="gallery" id="main-gallery">
         <div class="category" onclick="showImages('cityscape')">
-            <img src="assets/images/cityscape/cityscape-1.webp" alt="cityscape" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <img src="assets/images/cityscape/cityscape-001.webp" alt="cityscape" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
             <div class="category-placeholder" style="display: none;">No image</div>
             <p class="cityscape">cityscape</p>
         </div>
         <div class="category" onclick="showImages('nature')">
-            <img src="assets/images/nature/nature-1.webp" alt="nature" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <img src="assets/images/nature/nature-001.webp" alt="nature" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
             <div class="category-placeholder" style="display: none;">No image</div>
             <p class="nature">nature</p>
         </div>
         <div class="category" onclick="showImages('stage')">
-            <img src="assets/images/stage/stage-1.webp" alt="stage" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <img src="assets/images/stage/stage-001.webp" alt="stage" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
             <div class="category-placeholder" style="display: none;">No image</div>
             <p class="stage">stage</p>
         </div>
         <div class="category" onclick="showImages('people')">
-            <img src="assets/images/people/people-1.webp" alt="people" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <img src="assets/images/people/people-001.webp" alt="people" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
             <div class="category-placeholder" style="display: none;">No image</div>
             <p class="people">people</p>
         </div>
@@ -217,30 +217,37 @@
             grid.style.display = 'flex';
             grid.innerHTML = '';
 
-            // Bilder für diese Kategorie laden
+            // Bilder für diese Kategorie laden (001-999)
             const images = [];
-            for (let i = 1; i <= 100; i++) {
-                const imgUrl = `assets/images/${category}/${category}-${i}.webp`;
+            let loadedCount = 0;
+            
+            for (let i = 1; i <= 999; i++) {
+                const paddedI = String(i).padStart(3, '0');
+                const imgUrl = `assets/images/${category}/${category}-${paddedI}.webp`;
                 const img = new Image();
                 img.src = imgUrl;
-                img.alt = `${category} ${i}`;
+                img.alt = `${category} ${paddedI}`;
                 img.onload = function() {
                     img.onclick = function() {
-                        // Finde den Index des aktuellen Bildes
-                        const index = images.indexOf(imgUrl);
-                        openLightbox(imgUrl, category, index, images);
+                        openLightbox(imgUrl, category, images.indexOf(imgUrl), images);
                     };
                     img.style.maxWidth = '150px';
                     img.style.height = 'auto';
                     grid.appendChild(img);
+                    images.push(imgUrl);
+                    loadedCount++;
                 };
                 img.onerror = function() {
-                    if (i > 5 && !grid.querySelector('img')) {
-                        grid.innerHTML = '<p>No images in this category.</p>';
-                    }
+                    // Bild existiert nicht, ignorieren
                 };
-                images.push(imgUrl);
             }
+            
+            // Falls keine Bilder geladen wurden
+            setTimeout(function() {
+                if (loadedCount === 0) {
+                    grid.innerHTML = '<p>No images in this category.</p>';
+                }
+            }, 500);
         }
 
         // Funktion zum Zurücksetzen zur Hauptansicht
@@ -271,6 +278,8 @@
 
         // Navigation in der Lightbox
         function navigateLightbox(direction) {
+            if (!currentImages || currentImages.length === 0) return;
+            
             currentImageIndex += direction;
             
             // Begrenze den Index
