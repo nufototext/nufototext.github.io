@@ -55,7 +55,7 @@ h1 {
     color: #ffff77;
 }
 
-.category p.people {
+.category p.things {
     color: #ff9944;
 }
 
@@ -162,7 +162,7 @@ h1 {
     border: 2px solid #ffff77;
 }
 
-#people-images {
+#things-images {
     border: 2px solid #ff9944;
 }
 
