@@ -14,7 +14,7 @@ let touchEndX = 0;
 
 /**
  * Zeigt die Bilder einer Kategorie an
- * @param {string} category - Die Kategorie (cityscape, nature, stage, people)
+ * @param {string} category - Die Kategorie (cityscape, nature, stage, things)
  */
 function showImages(category) {
     // Hauptgalerie ausblenden
